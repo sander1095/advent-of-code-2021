@@ -1,8 +1,8 @@
 ﻿# Advent Of Code 2021
 
-![](https://img.shields.io/badge/day%20📅-1-blue)
-![](https://img.shields.io/badge/stars%20⭐-1-yellow)
-![](https://img.shields.io/badge/days%20completed-1-red)
+![](https://img.shields.io/badge/day%20📅-2-blue)
+![](https://img.shields.io/badge/stars%20⭐-2-yellow)
+![](https://img.shields.io/badge/days%20completed-2-red)
 
 
 My contributions for the [Advent Of Code 2021 event](https://adventofcode.com/2021) written in C# with dotnet 6!
