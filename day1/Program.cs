@@ -1,10 +1,12 @@
 ﻿var input = File.ReadAllLines("input.txt").Select(x => int.Parse(x)).ToList();
 
-var result = SonarSweep(input);
+var partOneResult = SonarSweepPartOne(input);
+var partTwoResult = SonarSweepPartTwo(input);
 
-Console.WriteLine(result);
+Console.WriteLine($"Part one: {partOneResult}");
+Console.WriteLine($"Part two: {partTwoResult}");
 
-int SonarSweep(IReadOnlyList<int> numbers)
+int SonarSweepPartOne(IReadOnlyList<int> numbers)
 {
     var increases = 0;
 
@@ -20,5 +22,20 @@ int SonarSweep(IReadOnlyList<int> numbers)
         }
     }
 
+    return increases;
+}
+
+int SonarSweepPartTwo(IReadOnlyList<int> numbers)
+{
+    var increases = 0;
+    // Admittedly, I cheated a little bit on this one.. It was already past 00:00 🕕😴
+    // But hey, I learned some cool stuff! Thanks u/Zeeterm!
+    for (int i = 3; i < numbers.Count ; i++)
+    {
+        if (numbers[i] > numbers[i - 3])
+        {
+            increases++;
+        }
+    }
     return increases;
 }
