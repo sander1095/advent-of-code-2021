@@ -6,6 +6,7 @@
 }).ToList();
 
 Console.WriteLine($"Part one: {DivePartOne(input)}");
+Console.WriteLine($"Part two: {DivePartTwo(input)}");
 
 static int DivePartOne(IReadOnlyList<NavigationStep> navigationSteps)
 {
@@ -24,6 +25,32 @@ static int DivePartOne(IReadOnlyList<NavigationStep> navigationSteps)
                 break;
             case Direction.Up:
                 depth -= navigationStep.Units;
+                break;
+        }
+    }
+
+    return horizontalPosition * depth;
+}
+
+static int DivePartTwo(IReadOnlyList<NavigationStep> navigationSteps)
+{
+    var horizontalPosition = 0;
+    var depth = 0;
+    var aim = 0;
+
+    foreach (var navigationStep in navigationSteps)
+    {
+        switch (navigationStep.Direction)
+        {
+            case Direction.Forward:
+                horizontalPosition += navigationStep.Units;
+                depth += aim * navigationStep.Units;
+                break;
+            case Direction.Down:
+                aim += navigationStep.Units;
+                break;
+            case Direction.Up:
+                aim -= navigationStep.Units;
                 break;
         }
     }
