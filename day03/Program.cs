@@ -69,7 +69,54 @@ static int BinaryDiagnosticPartOne(IReadOnlyList<string> binaryNumbers)
     return gammaRate * epsilonRate;
 }
 
-static int BinaryDiagnosticPartTwo(IReadOnlyList<string> numbers)
+static int BinaryDiagnosticPartTwo(IReadOnlyList<string> binaryNumbers)
 {
-    return 3;
+    var oxygen = CalculateOxygenLevel(binaryNumbers, 0);
+    var c02 = CalculateCO2Level(binaryNumbers, 0);
+
+    return oxygen * c02;
+
+
+    static int CalculateOxygenLevel(IReadOnlyList<string> binaryNumbers, int position)
+    {
+        if (binaryNumbers.Count == 1)
+        {
+            return Convert.ToInt32(string.Join("", binaryNumbers), 2);
+        }
+
+        var numbersInPosition = binaryNumbers.Select(x => int.Parse(x[position].ToString())).ToList();
+        
+        var oneWon = false;
+
+        if (numbersInPosition.Count(x => x == 1) >= numbersInPosition.Count(x => x == 0))
+        {
+            oneWon = true;
+        }
+
+        var winnersOfCurrentRound = binaryNumbers.Where(x => x[position].ToString() == (oneWon ? "1" : "0")).ToList();
+        return CalculateOxygenLevel(winnersOfCurrentRound, position + 1);
+    }
+
+    static int CalculateCO2Level(IReadOnlyList<string> binaryNumbers, int position)
+    {
+        if (binaryNumbers.Count == 1)
+        {
+            return Convert.ToInt32(string.Join("", binaryNumbers), 2);
+        }
+
+        var numbersInPosition = binaryNumbers.Select(x => int.Parse(x[position].ToString())).ToList();
+
+        var amountOfOnes = numbersInPosition.Count(x => x == 1);
+        var amountOfZeroes = numbersInPosition.Count(x => x == 0);
+
+        var shouldContinueWithOne = false;
+
+        if(amountOfOnes < amountOfZeroes)
+        {
+            shouldContinueWithOne = true;
+        }        
+
+        var winnersOfCurrentRound = binaryNumbers.Where(x => x[position].ToString() == (shouldContinueWithOne ? "1" : "0")).ToList();
+        return CalculateCO2Level(winnersOfCurrentRound, position + 1);
+    }
 }
