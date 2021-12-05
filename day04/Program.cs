@@ -29,7 +29,7 @@ int GiantSquidPartOne(IReadOnlyList<int> input, IReadOnlyList<BingoBoard> bingoB
 
 int GiantSquidPartTwo(IReadOnlyList<int> input, IReadOnlyList<BingoBoard> bingoBoards)
 {
-    foreach (var number in input)
+    foreach (var number in input) 
     {
         foreach (var bingoBoard in bingoBoards)
         {
