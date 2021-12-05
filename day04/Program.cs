@@ -14,7 +14,9 @@ int GiantSquidPartOne(IReadOnlyList<int> input, IReadOnlyList<BingoBoard> bingoB
     {
         foreach (var bingoBoard in bingoBoards)
         {
-            if(bingoBoard.MarkNumber(number))
+            bingoBoard.MarkNumber(number);
+
+            if (bingoBoard.HasBingo())
             {
                 return bingoBoard.CalculateFinalScore(number);
             }
@@ -27,11 +29,21 @@ int GiantSquidPartOne(IReadOnlyList<int> input, IReadOnlyList<BingoBoard> bingoB
 
 int GiantSquidPartTwo(IReadOnlyList<int> input, IReadOnlyList<BingoBoard> bingoBoards)
 {
+    var amountOfBoardsWithBingo = 0;
+    foreach (var number in input)
+    {
+        foreach (var bingoBoard in bingoBoards)
+        {
+            bingoBoard.MarkNumber(number);
 
-    var increases = 0;
+            if(bingoBoards.All(x => x.HasBingo()))
+            {
+                return bingoBoard.CalculateFinalScore(number);
+            }
+        }       
+    }
 
-
-    return increases;
+    throw new Exception("No bingo found");
 }
 
 (IReadOnlyList<int> input, IReadOnlyList<BingoBoard> bingoBoards) GetInput(string file)
@@ -82,14 +94,12 @@ class BingoBoard
         _items = items;
     }
 
-    public bool MarkNumber(int number)
+    public void MarkNumber(int number)
     {
         foreach (var item in _items.SelectMany(x => x.Select(y => y)).Where( x => x.Number == number))
         {
             item.Marked = true;
         }
-
-        return HasBingo();
     }
 
     public int CalculateFinalScore(int winningNumber)
@@ -99,7 +109,7 @@ class BingoBoard
         return allUnmarkedNumbersCombined * winningNumber;
     }
 
-    private bool HasBingo()
+    public bool HasBingo()
     {
         // Bingo in any row?
         foreach (var item in _items)
